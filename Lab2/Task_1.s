@@ -21,5 +21,5 @@ fill_ram:
 
     ret     # Return ontrol back to C program
 
-    .section .note.GNU-stackk,"",@progbits
+    .section .note.GNU-stack,"",@progbits
     
