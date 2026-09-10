@@ -6,8 +6,9 @@
 .global fill_ram    # Make function visbile to C program
 
 fill_ram:
-    #Store FFh inot RAM locations 50h -58H using direct addressing
+    # Store FFh into RAM locations 50h -58H using direct addressing
 
+    # direct memory adressing
 
     movb $0xFF, ram+0x50
     movb $0xFF, ram+0x51
