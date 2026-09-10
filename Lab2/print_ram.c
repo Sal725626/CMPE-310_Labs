@@ -1,15 +1,14 @@
 #include <stdio.h>
-extern unsigned char ram[];  // RAM Declared in
-assembly
+extern unsigned char ram[];  // RAM Declared in assembly
 extern void fill_ram(void);  // Assembly function
 
 int main()
-{ fil_ram(); // Run assembly code
+{ fill_ram(); // Run assembly code
     printf ("Ram contents from 50H to 58H: \n");
 
     for (int i = 0x50; i <= 0x58;  i++)
     {
-        printf( "%02X", ram[i]);
+        printf( "%02X ", ram[i]);
 
     }
     printf("\n");
