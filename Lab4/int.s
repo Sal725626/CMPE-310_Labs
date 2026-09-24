@@ -18,7 +18,7 @@ jge done            # if the index is >= num_Values, then we stop
 
 addl (%rdi,%rcx,4), %eax    # sum += numbers[index]
 
-add $1, %ecx                #index++
+addl $1, %ecx                #index++
 
 jmp loop            # Repeat unitl done
 
