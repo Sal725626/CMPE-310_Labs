@@ -1,73 +1,60 @@
-.section .data
-
-# This will ask the user to enter the first string they want
-# calculate the bytes in the string
-prmpt1:
-    .ascii "Enter your first string:"
-prmpt1_len = . - prmpt1
-
-
-prmpt2:
-    .ascii "Enter second string:"
-prmpt2_len = . - prmpt2
-# now ask to end second string
-
-
-.section .bss
-
-strng1:
-    .skip 256 #this means to Reserve 256 bytes at the start
-
-strng2: 
-    .skip 256
-
-
 .section .text
-.global _start
+.global hamming_distance
 
-_start:
+hamming_distance:
 
-# write and put the adress of prmpt 1 into rsi and also figure out how many bytes
+    
+# C will pass us this:
+# RDI = address of string 1
+# RSI = address of string 2
 
-movq $1, %rax               # asking the system to write
-movq $1, %rdi               # asking  where and saying that stdout; basically print to terminal
-leaq prmpt1(%rip), %rsi     #leaq puts the address of letters into rsi ; rsi is where is the text
-movq $prmpt1_len, %rdx       # how many characters/bytes?
-syscall                     # excute / wrtire to terimnal
+# RAX will contain the returned Hamming distance
 
-#read 
-
-movq $0, %rax               #asking the system to read now 
-movq $0, %rdi               # stdin
-leaq strng1(%rip), %rsi     # rsi acting like where to put the user input given
-movq $255, %rdx             # max number of bytes to read
-syscall
-
-movq %rax, %r12             # save the number of bytes read
-
-# now do the same for prompt 2 and write
-
-movq $1, %rax               # asking the system to write
-movq $1, %rdi               # asking  where and saying that stdin
-leaq prmpt2(%rip), %rsi     # but we are doing same register for prmpt 1 again? wouldnt that mess our data up from before hmmm
-movq $prmpt2_len, %rdx      # how many characters/bytes?
-syscall
-
-# read againn for string 2
-
-movq $0, %rax               # asking the system to read now 
-movq $0, %rdi               # stdin
-leaq strng2(%rip), %rsi 
-movq $255, %rdx  
-syscall
-
-movq %rax, %r13             # save second input length now
-
-#Exit 
-movq $60, %rax
-movq $0,  %rdi
-syscall
+xorq %rax, %rax  # RAX = 0, total Hamming distance
 
 
+loop_chars:
 
+movb (%rdi), %cl
+# CL = current character from string 1
+
+movb (%rsi), %dl
+# DL = current character from string 2
+
+# stop when either reach null terminotr
+cmpb $0, %cl
+je done
+
+cmpb $0, %dl
+je done
+
+# XOR the two characters and every 1 in the results will be a different bit
+
+xorb %dl, %cl
+
+movb $8, %r8b   # Each character has 8 bits
+
+
+check_bits: # check for bits and process accordingly 
+testb $1, %cl   # see n check for lowest bit
+jz equal_bit     # if same then bit is 0
+incq %rax       # if its 1 then increase the distance 
+
+equal_bit: 
+shrb $1, %cl    # move into to next lowest position
+decb %r8b       # One less bit to check
+jne check_bits
+
+
+# Move to next character in both strings
+incq %rdi
+incq %rsi
+jmp loop_chars
+
+
+done:
+ret    # Return the value is already in RAX
+
+
+.section .note.GNU-stack,"",@progbits
 
