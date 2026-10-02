@@ -23,6 +23,6 @@ addl $1, %ecx                #index++
 jmp loop            # Repeat unitl done
 
 done:
- ret     # Return ontrol back to C program
+ret     # Return ontrol back to C program
 
 .section .note.GNU-stack,"",@progbits

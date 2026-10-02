@@ -43,10 +43,10 @@ int main(int filec, char *filev[])
             printf("Error reading the data\n");
             free(numbers);
             fclose(fp);
-            }
-            return 1;
+        
+            return 1; }
     }
-    fclose(fp);
+    fclose(fp); //closee
 
     // debuggin stuff
   printf("Loaded %d numbers:\n", num_Values);
@@ -61,10 +61,6 @@ int main(int filec, char *filev[])
     free(numbers);
 
 
-
-
-
-    
 return 0;
 
-}
+} 
