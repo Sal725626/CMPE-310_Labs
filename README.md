@@ -88,3 +88,8 @@ gcc -no-pie max.s -o max
 ./max
 
 Expected maximum value: 23
+
+
+#LAB 6
+
+Upload to arduino and run
