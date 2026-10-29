@@ -90,6 +90,10 @@ gcc -no-pie max.s -o max
 Expected maximum value: 23
 
 
-#LAB 6
+# LAB 6
+
+Upload to arduino and run
+
+# LAB 7
 
 Upload to arduino and run
