@@ -24,4 +24,5 @@ void loop() {
     delay(1000);
     //both off
     digitalWrite(LED1, LOW);
+    delay(1000);
 }
